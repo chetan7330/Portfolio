@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akula Chetan Krishna Sai — Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.ico">
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo">AK</div>
+        <div>
+          <h1>Akula Chetan Krishna Sai</h1>
+          <p class="muted">Currently pursuing B.Tech (8th Sem) CSE • Full Stack Developer • ML • DevOps</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="btn" onclick="scrollToSection('projects')">Projects</button>
+        <button class="btn" onclick="scrollToSection('about')">About</button>
+        <a class="btn accent" id="resumeLink" href="assets/Resume-Chetan.pdf" target="_blank" rel="noopener">Resume</a>
+        <button class="btn" id="themeBtn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card intro">
+        <h2>Hi — I'm Chetan 👋</h2>
+        <p class="lead">
+          A Full Stack & ML Developer passionate about building modern web apps, DevOps pipelines, and practical AI solutions.
+        </p>
+
+        <div class="badges">
+          <span class="badge">B.Tech CSE (Currently Pursuing)</span>
+          <span class="badge">React</span>
+          <span class="badge">Machine Learning</span>
+          <span class="badge">DevOps</span>
+        </div>
+
+        <div class="row mt-16">
+          <button class="btn accent" onclick="scrollToSection('projects')">See Projects</button>
+          <button class="btn" onclick="copyEmail()">Copy Email</button>
+          <a class="btn" href="https://github.com/chetan7330" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/akula-chetan-krishna-sai-81023a221/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="card profile">
+        <img src="assets/images/avatar.png" alt="Avatar" class="avatar" onerror="this.style.display='none'">
+        <div class="name">Akula Chetan Krishna Sai</div>
+        <div class="muted">Currently pursuing B.Tech CSE — CGPA 8.14</div>
+
+        <div class="row center mt-12">
+          <a class="btn" id="downloadBtn" href="assets/Resume-Chetan.pdf" download>Download CV</a>
+        </div>
+
+        <div class="muted mt-12">Skills</div>
+        <div class="skills mt-8">
+          <span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">JavaScript</span>
+          <span class="skill">React</span><span class="skill">Node.js</span><span class="skill">Python</span>
+          <span class="skill">C</span><span class="skill">C++</span><span class="skill">Java</span><span class="skill">SQL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <div class="grid">
+
+      <!-- PROJECTS -->
+      <section id="projects" class="card">
+        <h3>Projects (click repo or card)</h3>
+
+        <div class="projects">
+
+          <!-- Project 1: Post-HCT (resume title) -->
+          <article class="project" role="button" tabindex="0" onclick="openProject(1)">
+            <div class="p-thumb"><span class="thumb-fallback">P1</span></div>
+            <div class="p-body">
+              <h4>Post-HCT Survival Prediction</h4>
+              <p class="muted">LightGBM, XGBoost, Random Forest — ensemble ML pipeline for survival prediction.</p>
+              <div class="row mt-8">
+                <a class="btn" href="https://github.com/chetan7330/Post-HCT-Survival-Prediction" target="_blank" rel="noopener">View Repo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Sports Meet Database (DBMS project as per your link) -->
+          <article class="project" role="button" tabindex="0" onclick="openProject(2)">
+            <div class="p-thumb"><span class="thumb-fallback">P2</span></div>
+            <div class="p-body">
+              <h4>Sports Meet Database — SQL based DBMS Project</h4>
+              <p class="muted">Database design & SQL system for managing sports meet data (DBMS course project).</p>
+              <div class="row mt-8">
+                <a class="btn" href="https://github.com/chetan7330/Sports-Meet-Database-Management-System" target="_blank" rel="noopener">View Repo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Student Record Management System (DevOps) -->
+          <article class="project" role="button" tabindex="0" onclick="openProject(3)">
+            <div class="p-thumb"><span class="thumb-fallback">P3</span></div>
+            <div class="p-body">
+              <h4>Student Record Management System</h4>
+              <p class="muted">Node.js, MongoDB, Docker, Jenkins — RESTful CRUD + CI/CD & containerization (DevOps project).</p>
+              <div class="row mt-8">
+                <a class="btn" href="https://github.com/chetan7330/DevOps-Proj" target="_blank" rel="noopener">View Repo</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="card">
+        <h3>About & Experience</h3>
+        <p class="muted">
+            <p></p>
+          I am currently pursuing my B.Tech (8th Sem) in Computer Science Engineering at VNR Vignana Jyothi Institute Of Engineering and Technology with a CGPA of 8.14. <p></p>
+          I apply software engineering, DevOps, and ML concepts to build robust solutions. <p></p>
+          I have hands-on experience in full stack web development, machine learning model development, and DevOps practices including CI/CD and containerization. <p></p>
+          I am eager to contribute to innovative projects and collaborate with like-minded professionals in the tech community. <p></p> 
+          I would claim myself to be a quick learner and a team player, leader, always ready to take on new challenges and deliver high-quality results.
+        </p>
+
+        <h4 class="mt-12">Experience</h4>
+        <div class="timeline mt-8">
+          <div class="timeline-item">
+            <h5>InfyStore — Web Development Intern</h5>
+            <p class="muted">Built responsive UI components, product filtering, cart & checkout features during internship.</p>
+          </div>
+        </div>
+
+        <h4 class="mt-12">Certifications</h4>
+        <p class="muted">Python • DSA • DBMS • Java • Web Dev • Tableau • Power BI</p>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="card">
+        <h3>Technical Skills</h3>
+        <div class="skills mt-8">
+          <span class="skill">C</span><span class="skill">C++</span><span class="skill">Java</span><span class="skill">JavaScript</span>
+          <span class="skill">React</span><span class="skill">Node.js</span><span class="skill">MongoDB</span><span class="skill">SQL</span>
+          <span class="skill">Python</span><span class="skill">Machine Learning</span><span class="skill">DevOps</span>
+          <span class="skill">Docker</span><span class="skill">CI/CD</span><span class="skill">Power BI</span>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="card">
+        <h3>Contact Me</h3>
+        <p class="muted">You can reach me at the email on my resume — I usually reply promptly.</p>
+
+        <form class="contact-form" onsubmit="sendContact(event)">
+          <input id="name" type="text" placeholder="Your name" required>
+          <input id="email" type="email" placeholder="Your email" required>
+          <textarea id="message" placeholder="Message..."></textarea>
+          <div class="row mt-8">
+            <button class="btn accent" type="submit">Send Message</button>
+            <button class="btn" type="button" onclick="window.location='mailto:chetan7330@gmail.com'">Email Direct</button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+
+    <footer class="footer">© <span id="year"></span> Akula Chetan Krishna Sai</footer>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close" aria-label="Close" onclick="closeModal()">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
