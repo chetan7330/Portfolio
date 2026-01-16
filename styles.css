@@ -73,13 +73,13 @@ header{
   width:56px;
   height:56px;
   border-radius:12px;
-  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  /* background:linear-gradient(135deg,var(--accent1),var(--accent2));
   display:grid;
   place-items:center;
   font-weight:800;
   font-size:20px;
   color:#021022;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  box-shadow:0 10px 30px rgba(0,0,0,.6); */
 }
 
 img{
