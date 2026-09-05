@@ -83,3 +83,20 @@ npx vite preview --base /Portfolio/ --port 4173
 # In another terminal (Google Chrome required):
 node tests/pages.cjs
 ```
+
+## Tower container instance
+
+The Docker image serves the React frontend and Node API together at `/` on port **3000**, as a non-root user. Only the compiled frontend, portfolio data and native Node server enter the runtime image; no npm dependencies are needed at runtime.
+
+Image: `chetan-portfolio.central-india.cr.tower.cloud/portfolio:latest`
+
+Add repository Actions secrets `TOWER_REGISTRY_USERNAME` and `TOWER_REGISTRY_PASSWORD` using registry credentials with push access. The container workflow tests pull requests without credentials; main pushes/manual runs build, smoke-test and publish both `latest` and an immutable full commit SHA tag. The registry must be reachable from GitHub-hosted runners.
+
+For the container instance, use port 3000 and HTTP health path `/api/health`, configure private-registry pull credentials in Tower, and route the instance's domain to that port. Use a commit SHA tag for repeatable releases. No persistent volume is required. Outbound HTTPS allows the public GitHub feed to refresh.
+
+```sh
+docker build -t chetan-portfolio:local .
+docker run --rm -p 3000:3000 chetan-portfolio:local
+```
+
+GitHub Pages deployment remains available until the container and its public domain are ready. Publishing an image does not create or update a container instance.
