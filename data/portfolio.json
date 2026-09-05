@@ -1,0 +1,221 @@
+{
+  "profile": {
+    "name": "Akula Chetan Krishna Sai",
+    "shortName": "Chetan",
+    "location": "Hyderabad, India",
+    "role": "Software Engineer Intern",
+    "company": "Tower Cloud",
+    "email": "chetan.krishna0306@gmail.com",
+    "github": "https://github.com/chetan7330",
+    "linkedin": "https://www.linkedin.com/in/akula-chetan-krishna-sai-81023a221/",
+    "portrait": "/assets/images/photo.jpg",
+    "resume": "/assets/Resume-Chetan.pdf",
+    "introduction": "I’m Chetan, a software engineer building cloud platforms, reliable backends, and useful interfaces.",
+    "about": "I enjoy working across the layers of a system: the interface people use, the services behind it, and the infrastructure that keeps it running.",
+    "education": "B.Tech in Computer Science and Engineering, VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad. Graduated in 2026 with a GPA of 8.12.",
+    "outside": [
+      "TuringCup 2023 finalist.",
+      "Technical event organizer with CSI.",
+      "Event coordinator at Dramatrix.",
+      "Regional U-16 badminton bronze medalist.",
+      "Led my school football team to the U-15 CBSE Clusters semifinals."
+    ]
+  },
+  "experience": {
+    "company": "Tower Cloud",
+    "role": "Software Engineer Intern",
+    "period": "June 2026 — Present",
+    "summary": "Cloud observability, alerting, and the systems behind them.",
+    "highlights": [
+      {
+        "title": "TowerWatch monitoring",
+        "description": "Developed resource overviews, historical graphs, and live updates across Go services and a React/Next.js portal for VMs, databases, storage, load balancers, managed Kubernetes, and Function Apps.",
+        "detail": "Optimized retrieval with batched VictoriaMetrics queries, bounded caching, and incremental snapshots. Preserved unavailable states for missing telemetry and paused charts for scaled-to-zero functions."
+      },
+      {
+        "title": "Backend-owned alerting",
+        "description": "Implemented organization-scoped alert rules, recipient validation, severity settings, and alert history. Connected Alertmanager webhooks to PostgreSQL-backed transitions and asynchronous email delivery.",
+        "detail": "Used correlation-based notification deduplication to handle retries and concurrent requests."
+      },
+      {
+        "title": "Reliability across the stack",
+        "description": "Extended Helm charts, recording rules, and exporters for worker readiness, pod capacity, and database metrics. Resolved PMM authentication, scrape discovery, and network policy issues.",
+        "detail": "Added authenticated capacity checks to cloud lifecycle operations. Validated fixes through automated tests, live metric queries, and scoped Helm rollouts."
+      }
+    ],
+    "stack": [
+      "Go",
+      "Next.js",
+      "PostgreSQL",
+      "VictoriaMetrics",
+      "Kubernetes",
+      "Helm"
+    ]
+  },
+  "projects": [
+    {
+      "id": "simman",
+      "title": "SimManCee",
+      "category": "Full-stack",
+      "label": "Business simulation platform",
+      "description": "An interactive business simulation experience, from reusable React interfaces to deployment on AWS.",
+      "stack": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "AWS"
+      ],
+      "url": "https://sim-man-cee.com",
+      "linkLabel": "Visit website",
+      "details": [
+        "Connected interactive simulation views to backend services through REST APIs, with responsive, reusable modules for simulations and team content.",
+        "Hosted the frontend on AWS S3 and the backend on EC2, with Route 53 handling custom-domain access."
+      ],
+      "artLabel": "Strategy, in practice."
+    },
+    {
+      "id": "posthct",
+      "title": "Post-HCT Survival Prediction",
+      "category": "Machine learning",
+      "label": "Applied machine learning",
+      "description": "A five-model ensemble for survival prediction, evaluated with 10-fold cross-validation and demographic subgroup analysis.",
+      "stack": [
+        "Python",
+        "LightGBM",
+        "XGBoost",
+        "Random Forest"
+      ],
+      "url": "https://github.com/chetan7330/Post-HCT-Survival-Prediction",
+      "linkLabel": "View code",
+      "details": [
+        "Combined LightGBM, two XGBoost variants, HistGradientBoosting, and Random Forest, using Kaplan–Meier target transformation for censored outcomes.",
+        "Achieved a 0.6853 C-index and 0.1930 RMSE with 10-fold cross-validation. Analyzed feature importance and performance across six demographic groups.",
+        "Co-authored and presented the resulting research paper at ICIRCA 2026."
+      ],
+      "artLabel": "0.6853 C-index · 10-fold validation"
+    },
+    {
+      "id": "records",
+      "title": "Student Record Management",
+      "category": "Cloud & DevOps",
+      "label": "Full-stack + DevOps",
+      "description": "Student record management backed by REST APIs, containerized delivery, and automated reliability checks.",
+      "stack": [
+        "Node.js",
+        "MongoDB",
+        "Docker",
+        "Jenkins"
+      ],
+      "url": "https://github.com/chetan7330/DevOps-Proj",
+      "linkLabel": "View code",
+      "details": [
+        "Built a Node.js and MongoDB application with secure create, read, update, and delete operations for student records.",
+        "Containerized the application with Docker and implemented Jenkins pipelines to automate build and deployment. Added health checks and automated API tests to verify endpoint behavior and service availability."
+      ],
+      "artLabel": "Build. Test. Ship."
+    }
+  ],
+  "research": [
+    {
+      "kind": "Conference paper · Co-author & presenter",
+      "title": "Post-HCT survival prediction",
+      "fullTitle": "Post-Hematopoietic Cell Transplantation Survival Predictions using Ensemble Machine Learning Models",
+      "meta": "ICIRCA 2026 · June 3–5, 2026 · Proceedings, pp. 1605–1611",
+      "url": "/assets/documents/post-hct-paper.pdf",
+      "linkLabel": "Read paper"
+    },
+    {
+      "kind": "Published patent application · Co-inventor",
+      "title": "Infrastructure-independent BLE–LoRa messaging",
+      "fullTitle": "Hybrid BLE–LoRa Infrastructure-Independent Communication System for Long-Range IoT Messaging Without Internet or Gateways",
+      "meta": "IN202641062255 A1 · Published May 29, 2026",
+      "url": "/assets/documents/patent-publication.pdf",
+      "linkLabel": "View publication"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Backend",
+      "items": [
+        "Go",
+        "Node.js",
+        "PostgreSQL",
+        "MongoDB",
+        "SQL",
+        "RabbitMQ",
+        "REST APIs"
+      ]
+    },
+    {
+      "category": "Frontend",
+      "items": [
+        "React",
+        "Next.js",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "Bootstrap"
+      ]
+    },
+    {
+      "category": "Cloud & delivery",
+      "items": [
+        "AWS",
+        "Kubernetes",
+        "Helm",
+        "Docker",
+        "Jenkins",
+        "GitHub Actions",
+        "Git"
+      ]
+    },
+    {
+      "category": "Observability",
+      "items": [
+        "VictoriaMetrics",
+        "Prometheus",
+        "Grafana",
+        "Loki",
+        "Alertmanager",
+        "PMM"
+      ]
+    },
+    {
+      "category": "Languages & ML",
+      "items": [
+        "Python",
+        "Java",
+        "C++",
+        "C",
+        "R",
+        "LightGBM",
+        "XGBoost",
+        "scikit-learn"
+      ]
+    }
+  ],
+  "disciplines": [
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "title": "Cloud engineering",
+      "description": "Go · Kubernetes · Observability",
+      "color": "#b6f7d2"
+    },
+    {
+      "id": "web",
+      "label": "Web",
+      "title": "Full-stack development",
+      "description": "React · Next.js · Node.js",
+      "color": "#9e8cff"
+    },
+    {
+      "id": "ml",
+      "label": "ML",
+      "title": "Applied machine learning",
+      "description": "Python · Ensemble learning · Research",
+      "color": "#8ac5ff"
+    }
+  ]
+}

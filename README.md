@@ -1,9 +1,68 @@
-# Portfolio — Akula Chetan Krishna Sai
+# Chetan Krishna — React portfolio
 
-This is my personal portfolio site (static HTML/CSS/JS).
+A JavaScript application built with **React, Vite, and Node.js**. React components render the portfolio from backend JSON and a live public GitHub feed. The original light and cobalt design includes a portrait-led hero, cursor-responsive artwork, and scroll-linked motion.
 
-## How to preview
-Open `index.html` locally.
+## Run
 
-## Deployment
-- GitHub Pages / Netlify / Vercel supported. See `assets/` for resume and images.
+Requires Node.js 22.12+ and npm.
+
+```sh
+npm ci
+npm run build
+npm start
+```
+
+Open **http://127.0.0.1:3000**.
+
+For development, stop the production server and run `npm run dev`. It starts the API on port 3000 and Vite on **http://127.0.0.1:5173**, with API requests proxied to Node.
+
+For hosting, use `npm ci && npm run build` as the build command and `npm start` as the start command. Set `HOST=0.0.0.0` when the host requires an external listener; `PORT` defaults to 3000. This version requires a Node-capable host. GitHub Pages cannot run its backend. No deployment has been performed.
+
+## Source
+
+- `src/App.jsx`: React app, API states, hero, and contact.
+- `src/PortfolioSections.jsx`: experience, filterable projects, GitHub feed, research, and biography.
+- `src/Interactive.jsx`: navigation, project explorer, cursor tilt, and scroll motion.
+- `src/useApi.js`: cancellable API requests and retry state.
+- `src/ui.jsx`: shared links, icons, and section headings.
+- `src/styles.css`: responsive presentation imported by the JavaScript entry point.
+- `server.mjs`: backend API and production static asset server.
+
+`index.html` is only Vite's small mounting shell; the website content and interactions are authored in React/JSX.
+
+## Update content
+
+Edit `data/portfolio.json` to update experience, projects, research, skills, contact information. The API reads it on every request; refresh the page to see content changes without rebuilding.
+
+Public files are in `public/assets/`: `Resume-Chetan.pdf`, `images/photo.jpg`, and `documents/`. Rebuild after changing public files. Keep patent status as **published application**, not granted patent.
+
+## Backend
+
+- `GET /api/portfolio`: portfolio data.
+- `GET /api/github`: up to six recently pushed, non-forked, non-archived public repositories from `chetan7330`. A five-minute in-memory cache shares concurrent requests. GitHub has a six-second timeout. Failures return cached data marked `stale`, or `unavailable` if nothing was fetched. Failed requests are retried after one minute.
+- `GET /api/health`: health check.
+
+No GitHub token is required. There is no admin editor, database, private-repository access, or writable API. The production server serves only the build's index and assets; it blocks `.env`, `.git`, source, tests, and direct data-file access.
+
+## Accessibility and performance
+
+Reduced-motion preferences disable scroll reveals, parallax, and cursor effects. Pointer and scroll updates use animation frames; cleanup removes listeners and observers. The current design does not load WebGL.
+
+Keyboard navigation, native disclosures, announced filter counts, API retry states, and clipboard failure feedback are supported. Resume and email remain available without JavaScript.
+
+## Verify
+
+```sh
+npm run build
+npm test
+# With npm start running, and Google Chrome installed:
+npm run test:browser
+```
+
+`TEST_URL` can point browser tests at another local port. Browser tests use Playwright with Google Chrome. They check API rendering, cursor and scroll motion, reduced motion, filters, disclosures, clipboard, responsive widths, API retry, GitHub failure, and the no-JavaScript resume link.
+
+## Interactive exploration
+
+The Menu button opens section navigation. Each project artwork opens an explorer with implementation details, repository/website links, and previous/next navigation. Arrow keys browse projects; Escape closes the explorer and restores focus.
+
+The sticky navigation tracks the current section with a reading-progress line. Portrait parallax, section reveals, cursor feedback, and artwork tilt respect reduced-motion settings.
