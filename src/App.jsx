@@ -9,12 +9,12 @@ const fallback = {
   email: "chetan.krishna0306@gmail.com",
   github: "https://github.com/chetan7330",
   linkedin: "https://www.linkedin.com/in/akula-chetan-krishna-sai-81023a221/",
-  resume: "/assets/Resume-Chetan.pdf",
+  resume: `${import.meta.env.BASE_URL}assets/Resume-Chetan.pdf`,
   introduction:
     "I’m Chetan, a software engineer building cloud platforms, reliable backends, and useful interfaces.",
   name: "Akula Chetan Krishna Sai",
   location: "Hyderabad, India",
-  portrait: "/assets/images/photo.jpg",
+  portrait: `${import.meta.env.BASE_URL}assets/images/photo.jpg`,
   role: "Software Engineer Intern",
   company: "Tower Cloud",
 };

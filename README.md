@@ -66,3 +66,20 @@ npm run test:browser
 The Menu button opens section navigation. Each project artwork opens an explorer with implementation details, repository/website links, and previous/next navigation. Arrow keys browse projects; Escape closes the explorer and restores focus.
 
 The sticky navigation tracks the current section with a reading-progress line. Portrait parallax, section reveals, cursor feedback, and artwork tilt respect reduced-motion settings.
+
+## GitHub Pages deployment
+
+The `main` branch contains the React source. `new-port-with-ani` currently contains the legacy HTML site and should not be used for this deployment.
+
+In GitHub repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** once. Push these changes to `main`, or run **Deploy portfolio to GitHub Pages** from the Actions tab. The workflow publishes `dist` at https://chetan7330.github.io/Portfolio/ on pushes to main, manual runs, and daily at 06:17 UTC. Pull requests run checks without publishing.
+
+`npm run build:pages` builds with `/Portfolio/` as the asset base and creates static portfolio and public GitHub feed JSON files. This mode needs no backend. GitHub repository information is a deployment-time snapshot, not a live five-minute feed. If GitHub is unavailable during the build, the portfolio still deploys and its feed shows unavailable. Edit `data/portfolio.json` and push to update portfolio content.
+
+Local Node development and `npm run build` continue to use the existing API. To verify Pages locally:
+
+```sh
+npm run build:pages
+npx vite preview --base /Portfolio/ --port 4173
+# In another terminal (Google Chrome required):
+node tests/pages.cjs
+```

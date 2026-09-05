@@ -10,7 +10,9 @@ export function useApi(path) {
   useEffect(() => {
     const controller = new AbortController();
     setState((previous) => ({ ...previous, loading: true, error: false }));
-    fetch(path, {
+    const url = import.meta.env.VITE_STATIC_SITE === "true"
+      ? `${import.meta.env.BASE_URL}${path.slice(1)}.json` : path;
+    fetch(url, {
       signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
     })
       .then((response) => {

@@ -34,7 +34,7 @@ export default function DeskBuddy() {
     <div ref={host} className="hero-buddy" data-mood={mood} data-step={step} data-complete={step >= 12}>
       <span className="hello-tag" aria-hidden={mood !== 'hello'}><span aria-hidden="true">👋</span> Hello!</span>
       <div className="hero-avatar">
-        {Object.entries(poses).map(([name, item]) => <img key={name} data-pose={name} className={`avatar-pose ${mood === name ? 'pose-active' : ''}`} src={`/assets/images/${item.file}`} width="1254" height="1254" fetchPriority={name === 'hello' ? 'high' : 'auto'} onLoad={() => setLoaded(previous => previous.includes(name) ? previous : [...previous, name])} alt={mood === name ? item.alt : ''} aria-hidden={mood !== name}/>)}
+        {Object.entries(poses).map(([name, item]) => <img key={name} data-pose={name} className={`avatar-pose ${mood === name ? 'pose-active' : ''}`} src={`${import.meta.env.BASE_URL}assets/images/${item.file}`} width="1254" height="1254" fetchPriority={name === 'hello' ? 'high' : 'auto'} onLoad={() => setLoaded(previous => previous.includes(name) ? previous : [...previous, name])} alt={mood === name ? item.alt : ''} aria-hidden={mood !== name}/>)}
       </div>
     </div>
   );
