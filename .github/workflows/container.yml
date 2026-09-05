@@ -36,7 +36,7 @@ jobs:
         run: |
           docker run -d --name portfolio-check -p 127.0.0.1:3000:3000 "$IMAGE:${GITHUB_SHA}"
           trap 'docker logs portfolio-check; docker rm -f portfolio-check' EXIT
-          curl --retry 10 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:3000/api/health
+          curl --retry 10 --retry-all-errors --retry-delay 1 --max-time 5 --fail http://127.0.0.1:3000/api/health
           curl --fail http://127.0.0.1:3000/ >/dev/null
           curl --fail http://127.0.0.1:3000/api/portfolio >/dev/null
       - name: Log in to Tower registry
