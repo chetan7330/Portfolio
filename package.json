@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "three": "0.185.1"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "playwright": "^1.63.0",
