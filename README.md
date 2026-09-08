@@ -100,3 +100,5 @@ docker run --rm -p 3000:3000 chetan-portfolio:local
 ```
 
 GitHub Pages deployment remains available until the container and its public domain are ready. Publishing an image does not create or update a container instance.
+
+Primary website: https://chetankrishna.in/ (Tower Cloud container instance). Canonical and social-preview URLs use this domain for both builds.

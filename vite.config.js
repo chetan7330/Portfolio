@@ -4,9 +4,7 @@ export default defineConfig({
   plugins: [{
     name: "portfolio-social-metadata",
     transformIndexHtml(html) {
-      const siteUrl = process.env.VITE_STATIC_SITE === "true"
-        ? "https://chetan7330.github.io/Portfolio/"
-        : "https://chetan-portfolio-ouokerdc4e.central-india.ci.tower.cloud/";
+      const siteUrl = "https://chetankrishna.in/";
       return html.replaceAll("__SITE_URL__", siteUrl);
     },
   }],
