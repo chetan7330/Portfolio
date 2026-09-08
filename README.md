@@ -105,12 +105,16 @@ Primary website: https://chetankrishna.in/ (Tower Cloud container instance). Can
 
 ### Automatic container deployment
 
-After image publishing, the workflow can PATCH the existing container image, poll the returned operation for up to ten minutes, and check the public health endpoint. It deploys the full commit SHA tag, not the mutable `latest` tag. Failed operations and timeouts fail the workflow; no automatic rollback is attempted.
+The workflow uses Tower-Cloud/container-instance-deploy-actions pinned to commit 35defe849704e0eb50f9bd9f7e2384ef288fb5e6. It logs in, fetches Tower registry credentials, builds and pushes, then requests the image update. A follow-up script logs in and polls the operation before checking website health. No service account or manually copied API token is required.
 
-Configure these in the owner repository's Actions secrets and variables:
-- Secret `TOWER_API_TOKEN`: a valid Tower bearer credential authorized to update this container. Registry credentials are not API credentials. A short-lived browser JWT is unsuitable for ongoing automation; configure a supported credential renewal flow before enabling it if required.
-- Variable `TOWER_API_BASE_URL`: the confirmed external base URL exposing `containers/{name}/image` and `operations/{id}` for the instance's region (no trailing endpoint).
-- Variable `TOWER_CONTAINER_NAME`: the exact instance name from Tower, not its DNS hostname.
-- Variable `TOWER_AUTO_DEPLOY`: `true` only after the credential and regional API settings are verified. Otherwise publishing continues without deployment.
+In chetan7330/Portfolio Settings → Secrets and variables → Actions, add:
+- Secret `TOWER_USER`: your Tower login username.
+- Secret `TOWER_PASSWORD`: your Tower login password.
+- Secret `TOWER_ORG_ID`: your Tower organization ID.
+- Variable `TOWER_AUTO_DEPLOY`: `true` once the secrets are ready.
 
-Test the deployment contract locally with `node --test scripts/deploy-container.test.mjs`. The contract was checked against the local Tower container-service implementation; production authentication and routing must be verified during setup.
+Container name and registry name are both configured as `chetan-portfolio`. The action uses https://api.tower.cloud. The previous TOWER_API_TOKEN, TOWER_API_BASE_URL and TOWER_CONTAINER_NAME settings are no longer used.
+
+When enabled, the action publishes `chetan-portfolio.central-india.cr.tower.cloud/portfolio/chetan-portfolio:<short-commit-SHA>` and updates the instance to that image. When disabled, the existing publish-only path still produces `portfolio:latest` and the full SHA tag. Pull requests only build and test; they never deploy.
+
+Run `node --test scripts/deploy-container.test.mjs` to test rollout monitoring. A successful action request alone does not prove rollout success; the monitoring step must pass too. Live login and deployment still require the repository secrets.
