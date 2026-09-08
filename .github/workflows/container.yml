@@ -7,6 +7,7 @@ on:
       - 'public/**'
       - 'data/**'
       - 'tests/**'
+      - 'scripts/deploy-container*'
       - 'server.mjs'
       - 'package*.json'
       - 'index.html'
@@ -29,6 +30,11 @@ jobs:
       IMAGE: chetan-portfolio.central-india.cr.tower.cloud/portfolio
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test deployment logic
+        run: node --test scripts/deploy-container.test.mjs
       - name: Build and run embedded tests
         run: docker build -t "$IMAGE:${GITHUB_SHA}" .
       - name: Smoke test container
@@ -40,15 +46,35 @@ jobs:
           curl --fail http://127.0.0.1:3000/ >/dev/null
           curl --fail http://127.0.0.1:3000/api/portfolio >/dev/null
       - name: Log in to Tower registry
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY != 'true'
         uses: docker/login-action@v4
         with:
           registry: chetan-portfolio.central-india.cr.tower.cloud
           username: ${{ secrets.TOWER_REGISTRY_USERNAME }}
           password: ${{ secrets.TOWER_REGISTRY_PASSWORD }}
       - name: Push tested image
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY != 'true'
         run: |
           docker tag "$IMAGE:${GITHUB_SHA}" "$IMAGE:latest"
           docker push "$IMAGE:${GITHUB_SHA}"
           docker push "$IMAGE:latest"
+      - name: Build, push and deploy with Tower action
+        id: tower
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY == 'true'
+        uses: Tower-Cloud/container-instance-deploy-actions@35defe849704e0eb50f9bd9f7e2384ef288fb5e6
+        with:
+          tower_user: ${{ secrets.TOWER_USER }}
+          tower_password: ${{ secrets.TOWER_PASSWORD }}
+          organization_id: ${{ secrets.TOWER_ORG_ID }}
+          container_name: chetan-portfolio
+          tcr_name: chetan-portfolio
+      - name: Wait for Tower rollout and check health
+        if: steps.tower.outcome == 'success'
+        timeout-minutes: 15
+        env:
+          TOWER_USER: ${{ secrets.TOWER_USER }}
+          TOWER_PASSWORD: ${{ secrets.TOWER_PASSWORD }}
+          TOWER_ORG_ID: ${{ secrets.TOWER_ORG_ID }}
+          TOWER_OPERATION_ID: ${{ steps.tower.outputs.taskId }}
+          DEPLOY_IMAGE: ${{ steps.tower.outputs.imageUrl }}
+        run: node scripts/deploy-container.mjs
