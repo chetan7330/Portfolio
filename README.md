@@ -105,7 +105,7 @@ Primary website: https://chetankrishna.in/ (Tower Cloud container instance). Can
 
 ### Automatic container deployment
 
-The workflow uses Tower-Cloud/container-instance-deploy-actions pinned to commit 35defe849704e0eb50f9bd9f7e2384ef288fb5e6. It logs in, fetches Tower registry credentials, builds and pushes, then requests the image update. A follow-up script logs in and polls the operation before checking website health. No service account or manually copied API token is required.
+The workflow uses a fork of Tower-Cloud/container-instance-deploy-actions pinned to commit 8f77aa00c5c1d9c25f9f592b02c22fd6f0b864af, adding an optional image_tag input. It logs in, fetches Tower registry credentials, builds and pushes, then requests the image update. A follow-up script logs in and polls the operation before checking website health. No service account or manually copied API token is required.
 
 In chetan7330/Portfolio Settings → Secrets and variables → Actions, add:
 - Secret `TOWER_USER`: your Tower login username.
@@ -115,6 +115,12 @@ In chetan7330/Portfolio Settings → Secrets and variables → Actions, add:
 
 Container name and registry name are both configured as `chetan-portfolio`. The action uses https://api.tower.cloud. The previous TOWER_API_TOKEN, TOWER_API_BASE_URL and TOWER_CONTAINER_NAME settings are no longer used.
 
-When enabled, the action publishes `chetan-portfolio.central-india.cr.tower.cloud/portfolio/chetan-portfolio:<short-commit-SHA>` and updates the instance to that image. When disabled, the existing publish-only path still produces `portfolio:latest` and the full SHA tag. Pull requests only build and test; they never deploy.
+When enabled, the action publishes `chetan-portfolio.central-india.cr.tower.cloud/portfolio/chetan-portfolio:<VERSION>` and updates the instance to that image. When disabled, the existing publish-only path still produces `portfolio:<VERSION>` and the full SHA tag. Pull requests only build and test; they never deploy.
 
 Run `node --test scripts/deploy-container.test.mjs` to test rollout monitoring. A successful action request alone does not prove rollout success; the monitoring step must pass too. Live login and deployment still require the repository secrets.
+
+### Release versions
+
+`VERSION` starts at `1.0`. Change it to `1.1`, `1.2`, etc. for smaller releases, or `2.0`, `3.0`, etc. for major releases. Include that change in the release PR. Merging a VERSION change to main triggers container deployment; ordinary source commits are checked in PRs and wait until the next release bump. Manual workflow dispatch remains available. Never reuse a version for changed content.
+
+The image for the first release is `chetan-portfolio.central-india.cr.tower.cloud/portfolio/chetan-portfolio:1.0`. GitHub's run records retain the source commit for traceability. No new secrets are required.

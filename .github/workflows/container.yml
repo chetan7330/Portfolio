@@ -3,18 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/**'
-      - 'public/**'
-      - 'data/**'
-      - 'tests/**'
-      - 'scripts/deploy-container*'
-      - 'server.mjs'
-      - 'package*.json'
-      - 'index.html'
-      - 'vite.config.js'
-      - 'Dockerfile'
-      - '.dockerignore'
-      - '.github/workflows/container.yml'
+      - 'VERSION'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -33,6 +22,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Read release version
+        id: version
+        shell: bash
+        run: |
+          version=$(cat VERSION)
+          [[ "$version" =~ ^[0-9]+\.[0-9]+$ ]] || { echo "VERSION must be major.minor, such as 1.0"; exit 1; }
+          echo "tag=$version" >> "$GITHUB_OUTPUT"
       - name: Test deployment logic
         run: node --test scripts/deploy-container.test.mjs
       - name: Build and run embedded tests
@@ -55,14 +51,15 @@ jobs:
       - name: Push tested image
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY != 'true'
         run: |
-          docker tag "$IMAGE:${GITHUB_SHA}" "$IMAGE:latest"
+          docker tag "$IMAGE:${GITHUB_SHA}" "$IMAGE:${{ steps.version.outputs.tag }}"
           docker push "$IMAGE:${GITHUB_SHA}"
-          docker push "$IMAGE:latest"
+          docker push "$IMAGE:${{ steps.version.outputs.tag }}"
       - name: Build, push and deploy with Tower action
         id: tower
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY == 'true'
-        uses: Tower-Cloud/container-instance-deploy-actions@35defe849704e0eb50f9bd9f7e2384ef288fb5e6
+        uses: chetankrishna03/container-instance-deploy-actions@8f77aa00c5c1d9c25f9f592b02c22fd6f0b864af
         with:
+          image_tag: ${{ steps.version.outputs.tag }}
           tower_user: ${{ secrets.TOWER_USER }}
           tower_password: ${{ secrets.TOWER_PASSWORD }}
           organization_id: ${{ secrets.TOWER_ORG_ID }}
