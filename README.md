@@ -102,3 +102,15 @@ docker run --rm -p 3000:3000 chetan-portfolio:local
 GitHub Pages deployment remains available until the container and its public domain are ready. Publishing an image does not create or update a container instance.
 
 Primary website: https://chetankrishna.in/ (Tower Cloud container instance). Canonical and social-preview URLs use this domain for both builds.
+
+### Automatic container deployment
+
+After image publishing, the workflow can PATCH the existing container image, poll the returned operation for up to ten minutes, and check the public health endpoint. It deploys the full commit SHA tag, not the mutable `latest` tag. Failed operations and timeouts fail the workflow; no automatic rollback is attempted.
+
+Configure these in the owner repository's Actions secrets and variables:
+- Secret `TOWER_API_TOKEN`: a valid Tower bearer credential authorized to update this container. Registry credentials are not API credentials. A short-lived browser JWT is unsuitable for ongoing automation; configure a supported credential renewal flow before enabling it if required.
+- Variable `TOWER_API_BASE_URL`: the confirmed external base URL exposing `containers/{name}/image` and `operations/{id}` for the instance's region (no trailing endpoint).
+- Variable `TOWER_CONTAINER_NAME`: the exact instance name from Tower, not its DNS hostname.
+- Variable `TOWER_AUTO_DEPLOY`: `true` only after the credential and regional API settings are verified. Otherwise publishing continues without deployment.
+
+Test the deployment contract locally with `node --test scripts/deploy-container.test.mjs`. The contract was checked against the local Tower container-service implementation; production authentication and routing must be verified during setup.

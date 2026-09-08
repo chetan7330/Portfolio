@@ -7,6 +7,7 @@ on:
       - 'public/**'
       - 'data/**'
       - 'tests/**'
+      - 'scripts/deploy-container*'
       - 'server.mjs'
       - 'package*.json'
       - 'index.html'
@@ -29,6 +30,11 @@ jobs:
       IMAGE: chetan-portfolio.central-india.cr.tower.cloud/portfolio
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test deployment logic
+        run: node --test scripts/deploy-container.test.mjs
       - name: Build and run embedded tests
         run: docker build -t "$IMAGE:${GITHUB_SHA}" .
       - name: Smoke test container
@@ -52,3 +58,12 @@ jobs:
           docker tag "$IMAGE:${GITHUB_SHA}" "$IMAGE:latest"
           docker push "$IMAGE:${GITHUB_SHA}"
           docker push "$IMAGE:latest"
+      - name: Deploy published image to Tower
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY == 'true'
+        timeout-minutes: 15
+        env:
+          TOWER_API_BASE_URL: ${{ vars.TOWER_API_BASE_URL }}
+          TOWER_CONTAINER_NAME: ${{ vars.TOWER_CONTAINER_NAME }}
+          TOWER_API_TOKEN: ${{ secrets.TOWER_API_TOKEN }}
+          DEPLOY_IMAGE: ${{ env.IMAGE }}:${{ github.sha }}
+        run: node scripts/deploy-container.mjs
