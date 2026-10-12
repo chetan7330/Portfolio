@@ -2,8 +2,6 @@ name: Build and publish container
 on:
   push:
     branches: [main]
-    paths:
-      - 'VERSION'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -57,9 +55,8 @@ jobs:
       - name: Build, push and deploy with Tower action
         id: tower
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.TOWER_AUTO_DEPLOY == 'true'
-        uses: chetankrishna03/container-instance-deploy-actions@8f77aa00c5c1d9c25f9f592b02c22fd6f0b864af
+        uses: Tower-Cloud/container-instance-deploy-actions@35defe849704e0eb50f9bd9f7e2384ef288fb5e6
         with:
-          image_tag: ${{ steps.version.outputs.tag }}
           tower_user: ${{ secrets.TOWER_USER }}
           tower_password: ${{ secrets.TOWER_PASSWORD }}
           organization_id: ${{ secrets.TOWER_ORG_ID }}
