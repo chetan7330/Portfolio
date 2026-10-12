@@ -238,7 +238,7 @@ export function About({ profile, skills }) {
         <div className="about-personal">
         <figure className="about-portrait">
           <div className="about-photo-frame tilt-surface">
-            <img src={profile.portrait} alt={profile.name} width="2378" height="2621" loading="lazy" />
+            <img src={profile.portrait} alt={profile.name} width="4032" height="3024" loading="lazy" />
           </div>
           <figcaption>{profile.name}<span>{profile.location}</span></figcaption>
         </figure>
