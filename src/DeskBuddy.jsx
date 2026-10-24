@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const poses = {
-  hello: { file: 'chetan-desk-avatar.png', text: 'Hi! I’m Chetan. Glad you’re here.', icon: '👋', alt: 'Chetan smiling and greeting you from his laptop' },
-  code: { file: 'chetan-desk-focused.png', text: 'Focused. Building something useful.', icon: '</>', alt: 'Chetan working at his laptop with a focused expression' },
-  coffee: { file: 'chetan-desk-sip.png', text: 'A quick sip. Then back to it.', icon: '☕', alt: 'Chetan sipping coffee while looking toward his laptop' },
+  hello: { file: 'chetan-desk-avatar.webp', text: 'Hi! I’m Chetan. Glad you’re here.', icon: '👋', alt: 'Chetan smiling and greeting you from his laptop' },
+  code: { file: 'chetan-desk-focused.webp', text: 'Focused. Building something useful.', icon: '</>', alt: 'Chetan working at his laptop with a focused expression' },
+  coffee: { file: 'chetan-desk-sip.webp', text: 'A quick sip. Then back to it.', icon: '☕', alt: 'Chetan sipping coffee while looking toward his laptop' },
 };
 const sequence = ['hello', 'code', 'coffee', 'code'];
 const durations = [2400, 4200, 2400, 4200];

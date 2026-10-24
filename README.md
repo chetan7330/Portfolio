@@ -34,7 +34,7 @@ For hosting, use `npm ci && npm run build` as the build command and `npm start` 
 
 Edit `data/portfolio.json` to update experience, projects, research, skills, contact information. The API reads it on every request; refresh the page to see content changes without rebuilding.
 
-Public files are in `public/assets/`: `Resume-Chetan.pdf`, `images/photo.jpg`, and `documents/`. Rebuild after changing public files. Keep patent status as **published application**, not granted patent.
+Public files are in `public/assets/`: `Resume-Chetan.pdf`, `images/photo.webp`, and `documents/`. Rebuild after changing public files. Keep patent status as **published application**, not granted patent.
 
 ## Backend
 
@@ -73,7 +73,7 @@ The `main` branch contains the React source. `new-port-with-ani` currently conta
 
 In GitHub repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** once. Push these changes to `main`, or run **Deploy portfolio to GitHub Pages** from the Actions tab. The workflow publishes `dist` at https://chetan7330.github.io/Portfolio/ on pushes to main, manual runs, and daily at 06:17 UTC. Pull requests run checks without publishing.
 
-`npm run build:pages` builds with `/Portfolio/` as the asset base and creates static portfolio and public GitHub feed JSON files. This mode needs no backend. GitHub repository information is a deployment-time snapshot, not a live five-minute feed. If GitHub is unavailable during the build, the portfolio still deploys and its feed shows unavailable. Edit `data/portfolio.json` and push to update portfolio content.
+`npm run build:pages` builds with `/Portfolio/` as the asset base and creates a static portfolio JSON file plus `robots.txt` and `sitemap.xml`. This mode needs no backend. The GitHub feed is fetched live in the browser from the public GitHub API, which allows 60 requests per hour per visitor; on failure the feed shows unavailable with a retry button. Edit `data/portfolio.json` and push to update portfolio content.
 
 Local Node development and `npm run build` continue to use the existing API. To verify Pages locally:
 

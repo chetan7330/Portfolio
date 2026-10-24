@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { dirname, extname, join, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { GITHUB_REPOS_URL, toGithubFeed } from "./src/githubFeed.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const types = {
@@ -10,6 +11,7 @@ const types = {
   ".js": "text/javascript; charset=utf-8",
   ".png": "image/png",
   ".jpg": "image/jpeg",
+  ".webp": "image/webp",
   ".svg": "image/svg+xml",
   ".pdf": "application/pdf",
   ".woff2": "font/woff2",
@@ -30,7 +32,7 @@ export function createGithubFeed(fetcher = fetch, now = Date.now) {
     pending = (async () => {
       try {
         const response = await fetcher(
-          "https://api.github.com/users/chetan7330/repos?sort=pushed&per_page=100&type=owner",
+          GITHUB_REPOS_URL,
           {
             headers: {
               Accept: "application/vnd.github+json",
@@ -41,33 +43,7 @@ export function createGithubFeed(fetcher = fetch, now = Date.now) {
           },
         );
         if (!response.ok) throw Error("GitHub unavailable");
-        const data = await response.json();
-        if (!Array.isArray(data)) throw Error("Invalid GitHub response");
-        const repositories = data
-          .filter(
-            (repo) =>
-              !repo.fork &&
-              !repo.archived &&
-              typeof repo.name === "string" &&
-              /^https:\/\/github\.com\/chetan7330\//.test(repo.html_url),
-          )
-          .slice(0, 6)
-          .map((repo) => ({
-            name: repo.name,
-            description:
-              typeof repo.description === "string" ? repo.description : "",
-            url: repo.html_url,
-            language: repo.language || "Code",
-            stars: Number.isFinite(repo.stargazers_count)
-              ? repo.stargazers_count
-              : 0,
-            updatedAt: repo.pushed_at,
-          }));
-        cached = {
-          status: "fresh",
-          repositories,
-          updatedAt: new Date(now()).toISOString(),
-        };
+        cached = toGithubFeed(await response.json(), now());
         expires = now() + 300_000;
         return cached;
       } catch {

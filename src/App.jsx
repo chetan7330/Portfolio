@@ -4,6 +4,9 @@ import { Navigation, usePageMotion } from "./Interactive.jsx";
 import { Experience, Projects, Research, About } from "./PortfolioSections.jsx";
 import { ExternalLink, Icon } from "./ui.jsx";
 import { useApi } from "./useApi.js";
+import { GITHUB_REPOS_URL, toGithubFeed } from "./githubFeed.js";
+
+const staticSite = import.meta.env.VITE_STATIC_SITE === "true";
 
 const fallback = {
   email: "chetan.krishna0306@gmail.com",
@@ -14,7 +17,7 @@ const fallback = {
     "I’m Chetan, a software engineer building cloud platforms, reliable backends, and useful interfaces.",
   name: "Akula Chetan Krishna Sai",
   location: "Hyderabad, India",
-  portrait: `${import.meta.env.BASE_URL}assets/images/photo.jpg`,
+  portrait: `${import.meta.env.BASE_URL}assets/images/photo.webp`,
   role: "Software Engineer Intern",
   company: "Tower Cloud",
 };
@@ -76,7 +79,8 @@ function Contact({ profile }) {
 
 export default function App() {
   const portfolio = useApi("/api/portfolio");
-  const github = useApi("/api/github");
+  // ponytail: static site hits GitHub directly (60 requests/hour per visitor IP); the Node server caches for 5 minutes.
+  const github = useApi(staticSite ? GITHUB_REPOS_URL : "/api/github", staticSite ? toGithubFeed : undefined);
   const data = portfolio.data;
   const profile = data?.profile || fallback;
   usePageMotion(Boolean(data));

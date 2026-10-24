@@ -16,3 +16,9 @@ jobs:
       - run: npm ci
       - run: npm run build:pages
       - run: npm test
+      - name: Browser tests against the Node server
+        run: |
+          npm run build
+          node server.mjs &
+          curl --retry 20 --retry-all-errors --retry-delay 1 --fail http://127.0.0.1:3000/api/health
+          npm run test:browser
