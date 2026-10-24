@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useApi(path) {
+export function useApi(path, transform = (data) => data) {
   const [attempt, setAttempt] = useState(0);
   const [state, setState] = useState({
     data: null,
@@ -10,8 +10,8 @@ export function useApi(path) {
   useEffect(() => {
     const controller = new AbortController();
     setState((previous) => ({ ...previous, loading: true, error: false }));
-    const url = import.meta.env.VITE_STATIC_SITE === "true"
-      ? `${import.meta.env.BASE_URL}${path.slice(1)}.json` : path;
+    const url = path.startsWith("http") ? path
+      : import.meta.env.VITE_STATIC_SITE === "true" ? `${import.meta.env.BASE_URL}${path.slice(1)}.json` : path;
     fetch(url, {
       signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
     })
@@ -21,7 +21,7 @@ export function useApi(path) {
       })
       .then((data) => {
         if (!controller.signal.aborted)
-          setState({ data, loading: false, error: false });
+          setState({ data: transform(data), loading: false, error: false });
       })
       .catch(() => {
         if (!controller.signal.aborted)

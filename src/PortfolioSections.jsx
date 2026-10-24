@@ -142,7 +142,7 @@ function GithubFeed({ feed }) {
       : stale
         ? "GitHub is temporarily unavailable. Showing the last fetched repositories."
         : repositories.length
-          ? (import.meta.env.VITE_STATIC_SITE === "true" ? "Public repositories from GitHub, refreshed when the site is deployed." : "Public repositories, fetched from GitHub. Refreshed every five minutes.")
+          ? "Public repositories, fetched live from GitHub."
           : "No public repositories to show yet.";
   return (
     <div className="github-section">
